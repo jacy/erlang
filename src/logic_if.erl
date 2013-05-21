@@ -2,7 +2,7 @@
 %% @doc @todo Add description to login_if.
 
 
--module(login_if).
+-module(logic_if).
 
 %% ====================================================================
 %% API functions
