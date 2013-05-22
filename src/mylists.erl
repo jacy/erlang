@@ -59,9 +59,10 @@ list_funs() ->
 	println(lists:keyfind(2,1,PlaceList)), % Find value by key, return tuple.
 	end_list_funs.
 
-pasal_triangle(Rows) when Rows > 0 ->
-	if Rows == 1 -> next_row([0,1,0], 0, []);
-	true -> next_row([0,1,0], 0, []) end.
+pasal_triangle(Rows) when Rows > 0 -> pasal_triangle([0,1,0], 1, Rows).
+
+pasal_triangle(Final,Count,Rows) when Count >= Rows -> lists:reverse(Final);
+pasal_triangle([Final], Count, Rows) -> [Previous | _ ] = Final, pasal_triangle([next_row(Previous) | Final], Count + 1, Rows).
 
 next_row(Initial) -> next_row(Initial, 0, []). 
 next_row([], 0 , Final) -> [0 | Final];
