@@ -7,7 +7,7 @@
 %% ====================================================================
 %% API functions
 %% ====================================================================
--compile(export_all). %Making all functions available for external calls
+-compile(export_all). % Making all functions available for external calls
 -import(myio, [println/1]).
 
 %% The elements can be of any type, including numbers, atoms, tuples, strings, and other lists. 

@@ -31,7 +31,7 @@ process() ->
 	%% spawn parms : module name, function name, param for function
 	Pid = spawn(myprocess,report,[1]), % Once you have the process spawned, you can send a message to that pid
 	Pid ! hello_from_pid, % send message
-	%%The first argument is an atom, effectively the name you’re assigning the process, and the second argument is the pid of the process
+	%% Register(Alias, Pid) Registers the process Pid with the name Alias.
 	register(process1, Pid), % register process to name process1
 	process1 ! hello_from_process_registered,
 	
