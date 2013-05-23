@@ -53,13 +53,6 @@ hi_back() ->
 		hi_back()
 	end.
 
-number_only() -> 
-	receive 
-		%% When an Erlang process fails, it sends an explanation to other processes that are linked to it in the form of a tuple.
-		{'EXIT', Pid, Reason} -> io:format("FAILURE: ~p died because of ~p ~n",[Pid, Reason]); % Handler erros.
-		Num -> println(Num * 2), number_only()
-	end.
-
 ping_pong() ->
 	Pid_send = spawn(myprocess,report,[1]),
 	Pid_response = spawn(myprocess,hi_back,[]),
