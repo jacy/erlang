@@ -11,13 +11,18 @@
 -import(myio, [println/1]).
 
 
+
+%% If you send a message that doesn’t match a pattern at the receiving process, nothing will happen (for now at least). 
+%% Sending a message that gets through the pattern matching but creates an error will halt the process where the error occurred
+
 %% When a process crashes (e.g. failure of a BIF or a pattern match) Exit Signals are sent to all 
 %% processes to which the failing process is currently linked.
+%% Say A create B with spawn_link, then A -> B,If B exist, A gets notices.
 p_create_link_p() ->
-	process_flag(trap_exit,true),
-	Pid2 = spawn_link(process_link, handle_error_receive, []), %% Link Pid2 to Pid1
+	process_flag(trap_exit,true), % IMPORTANT ! Make it possible to Receive the exit notice.
+	Pid2 = spawn_link(process_link, error_receive, []), %% Link Pid2 to Pid1
 	Pid2 ! "Send Msg",
-	error_receive().
+	handle_error_receive().
 
 error_receive() ->
 		receive Num -> println(Num * 2),
@@ -25,12 +30,13 @@ error_receive() ->
 
 handle_error_receive() ->
 	receive 
-		{"EXIT", Pid, Reason} -> io:format("~p died because of ~p ~n",[Pid, Reason]);
-		Msg -> println(Msg), handle_error_receive() end.
+		{'EXIT', Pid, Reason} -> io:format("=====================~p died because of ~p ~n",[Pid, Reason]),
+			handle_error_receive(); % If receive Exist singal from linked process, ignore it and loop receive service.
+		Msg -> io:format("Receive Msg: ~p ~n ", [Msg]), handle_error_receive() end.
 
 demo_link() ->
 	Pid1 = spawn(process_link, p_create_link_p, []),
-	Pid1 ! "deliberate not number". %% Cause Pid1 to exit, which will cause its link process to exit. 
+	Pid1 ! "deliberate not number".
 
 
 %% ====================================================================
