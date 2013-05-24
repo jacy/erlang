@@ -30,7 +30,7 @@ error_receive() ->
 
 handle_error_receive() ->
 	receive 
-		{'EXIT', Pid, Reason} -> io:format("=====================~p died because of ~p ~n",[Pid, Reason]),
+		{'EXIT', Pid, Reason} -> io:format("oooooooooooooooooops ~p died because of ~p ooooooooooooooops~n",[Pid, Reason]),
 			handle_error_receive(); % If receive Exist singal from linked process, ignore it and loop receive service.
 		Msg -> io:format("Receive Msg: ~p ~n ", [Msg]), handle_error_receive() end.
 
