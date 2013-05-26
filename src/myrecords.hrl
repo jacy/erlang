@@ -1,0 +1,2 @@
+-record(person,{name="Jacy", age=16, description}).
+-record(user,{name,password}).

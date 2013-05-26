@@ -19,7 +19,7 @@
 %% processes to which the failing process is currently linked.
 %% Say A create B with spawn_link, then A -> B,If B exist, A gets notices.
 p_create_link_p() ->
-	process_flag(trap_exit,true), % IMPORTANT ! Make it possible to Receive the exit notice.
+	process_flag(trap_exit,true), % IMPORTANT ! Make it possible to Receive the exit notice,otherwise process gets killed at the same time.
 	Pid2 = spawn_link(process_link, error_receive, []), %% Link Pid2 to Pid1
 	Pid2 ! "Send Msg",
 	handle_error_receive().
