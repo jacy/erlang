@@ -17,6 +17,7 @@
 %% if you want to see what records are defined, or rl/1 if you want to see how a specific record is defined
 
 
+%% use rr("myrecords.hrl"). to include records in Shell command line.
 demo() ->
 	Johnson = #person{name ="Johnson"},
 	Admin = #user{name="David", password=111},
