@@ -2,6 +2,8 @@
 %% @doc @todo Add description to mymnesia.
 
 
+-include_lib("stdlib/include/qlc.hrl").
+
 -module(mymnesia).
 
 %% ====================================================================
@@ -49,9 +51,17 @@ tables() ->
 	mnesia:transaction(F),
 	println(mnesia:table_info(person, all)),
 	println(mnesia:transaction(fun() -> mnesia:read(person,"Jacy") end)),
+	qlcs(),
 end_Tables.
 
-
+%% Query List Comprehensions
+%% add -include_lib("stdlib/include/qlc.hrl").
+qlcs() ->
+	F = fun() ->
+			qlc:e(qlc:q([{X#person.name, X#person.age} || X <- mnesia:table(person), X#person.age > 5])) % age is great than 5
+		end,
+	println(mnesia:transaction(F)),
+end_qlcs.
 %% ====================================================================
 %% Internal functions
 %% ====================================================================
