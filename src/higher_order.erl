@@ -17,6 +17,7 @@ demo() ->
 	println(triple(2, fun math:cos/1)), %Pass a function from a built-in module
 	end_demo.
 
+%% List comprehension: NewList = [Expression || Pattern <- List, Condition1, Condition2, ... ConditionN]
 lists() ->
 	List = [1,2,3,4],
 	Double = fun(X) -> X * 2  end,
